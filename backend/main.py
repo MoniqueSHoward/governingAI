@@ -2,12 +2,14 @@ from fastapi import FastAPI
 from db_connect import engine
 from utils.add_privacy import addPrivacyPolicy
 from fastapi.middleware.cors import CORSMiddleware
-from db_model import user, privacy_gp, user_privacy_gp, vendor_score
+from db_model import user, privacy_gp, user_privacy_gp, vendor_score, chat_messages, chat_room
 
 user.Base.metadata.create_all(bind=engine)
 privacy_gp.Base.metadata.create_all(bind=engine)
 user_privacy_gp.Base.metadata.create_all(bind=engine)
 vendor_score.Base.metadata.create_all(bind=engine)
+chat_room.Base.metadata.create_all(bind=engine)
+chat_messages.Base.metadata.create_all(bind=engine)
 
 
 addPrivacyPolicy()
