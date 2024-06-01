@@ -2,7 +2,7 @@ from bs4 import BeautifulSoup
 import requests
 
 
-def get_relevent_link(url):
+def get_relevent_link(url, relevent_pages):
     try:
         response = requests.get(url)
         response.raise_for_status()
@@ -15,7 +15,7 @@ def get_relevent_link(url):
             if href.endswith("/"):
                 href = href[:-1]
             link_last = href.split('/')[-1]
-            if link_last and any([key in link_last.lower() for key in ["about","contact"]]):
+            if link_last and any([key in link_last.lower() for key in relevent_pages]):
                 if href.startswith('/'):
                     href = url + href
                 relevent_links.add(href)

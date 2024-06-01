@@ -1,4 +1,5 @@
 from db_model import user, privacy_gp, user_privacy_gp, vendor_score, chat_messages, chat_room, inuse_aisolution
+from routes import guiding_principle as GuidingPrincipleRoute
 from fastapi.middleware.cors import CORSMiddleware
 from utils.add_privacy import addPrivacyPolicy
 from routes import user as UserRoute
@@ -6,8 +7,6 @@ from routes import chat as ChatRoute
 from db_connect import engine
 from fastapi import FastAPI
 
-
-from utils.complete_user_profile import completeProfile
 
 user.Base.metadata.create_all(bind=engine)
 privacy_gp.Base.metadata.create_all(bind=engine)
@@ -32,3 +31,4 @@ app.add_middleware(
 
 app.include_router(UserRoute.router)
 app.include_router(ChatRoute.router)
+app.include_router(GuidingPrincipleRoute.router)

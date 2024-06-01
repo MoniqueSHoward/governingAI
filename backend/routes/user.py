@@ -56,7 +56,7 @@ async def getStarted(userData:UserModel, db: Session = Depends(get_db)):
     if user:
         raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=f"User with website {userData.website} is already exists.")
     
-    if not (links:= get_relevent_link(userData.website)):
+    if not (links:= get_relevent_link(userData.website, ["about","contact"])):
         raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=f"Unable to access your website {userData.website}.")
     
     print(links)
