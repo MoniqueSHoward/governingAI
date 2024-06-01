@@ -1,8 +1,13 @@
-from fastapi import FastAPI
-from db_connect import engine
-from utils.add_privacy import addPrivacyPolicy
+from db_model import user, privacy_gp, user_privacy_gp, vendor_score, chat_messages, chat_room, inuse_aisolution
 from fastapi.middleware.cors import CORSMiddleware
-from db_model import user, privacy_gp, user_privacy_gp, vendor_score, chat_messages, chat_room
+from utils.add_privacy import addPrivacyPolicy
+from routes import user as UserRoute
+from routes import chat as ChatRoute
+from db_connect import engine
+from fastapi import FastAPI
+
+
+from utils.complete_user_profile import completeProfile
 
 user.Base.metadata.create_all(bind=engine)
 privacy_gp.Base.metadata.create_all(bind=engine)
@@ -10,7 +15,7 @@ user_privacy_gp.Base.metadata.create_all(bind=engine)
 vendor_score.Base.metadata.create_all(bind=engine)
 chat_room.Base.metadata.create_all(bind=engine)
 chat_messages.Base.metadata.create_all(bind=engine)
-
+inuse_aisolution.Base.metadata.create_all(bind=engine)
 
 addPrivacyPolicy()
 
@@ -25,3 +30,5 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+app.include_router(UserRoute.router)
+app.include_router(ChatRoute.router)

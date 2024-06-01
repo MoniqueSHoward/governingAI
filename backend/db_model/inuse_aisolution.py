@@ -3,8 +3,8 @@ from .base import Base
 
 class InuseAISolution(Base):
 
-    __tablename__ = "chat_room"
+    __tablename__ = "inUseSolutions"
 
-    toolid = Column(String, primary_key=True) 
+    toolid = Column(Integer, primary_key=True) 
     userid = Column(Integer,ForeignKey('users.userid'),  nullable=False)
     name_purpose = Column(String, nullable=False) 
