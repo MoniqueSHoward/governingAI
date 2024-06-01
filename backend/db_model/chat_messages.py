@@ -6,6 +6,6 @@ class ChatMessage(Base):
 
     messageId = Column(Integer, primary_key= True)
     userid = Column(Integer,ForeignKey('users.userid'),  nullable=False)
-    roomId = Column(String, ForeignKey('chat_room.roomId'))
+    roomId = Column(String, ForeignKey('chat_rooms.roomId'))
     message = Column(String, nullable=False)
     isuser = Column(Boolean, default= True)
