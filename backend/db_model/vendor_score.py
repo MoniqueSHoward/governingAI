@@ -5,8 +5,8 @@ class UserVendorScore(Base):
     __tablename__ = "vendor_score"
 
     userid = Column(Integer,ForeignKey('users.userid'),  nullable=False, primary_key=True)
-    vendor_name = Column(String, nullable=False)
-    website = Column(String, nullable=False)
+    vendor_name = Column(String, nullable=False, primary_key=True)
+    website = Column(String, nullable=False, primary_key=True)
     tool_usecase = Column(String, nullable = True)
     privacy_score = Column(Float, nullable=False)
     privacy_summary = Column(String, nullable=False)

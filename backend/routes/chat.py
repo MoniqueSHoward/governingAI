@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Depends, WebSocket, WebSocketDisconnect, WebSocketException,status, HTTPException
 from utils.scrape_users_website import FUNCTION_SCRAPE_COMPANY_INFO, scrape_company_info
 from utils.complete_user_profile import FUNCTION_COMPLETEPROFILE, completeProfile
+from constants import PROFILE_ASSISTANT_INSTRUCTION, QA_AGENT_INSTRUCTION
 from services.assistant_chat_service import Assistant
-from constants import PROFILE_ASSISTANT_INSTRUCTION
 from db_model.chat_messages import ChatMessage
 from utils.create_message import createMessage
 from db_model.chat_room import ChatRoom
@@ -25,8 +25,7 @@ function_definition = [
     FUNCTION_COMPLETEPROFILE
 ]
 
-ASSISTANT = Assistant(PROFILE_ASSISTANT_INSTRUCTION, "", function_definition, tools)
-
+ASSISTANT = Assistant(PROFILE_ASSISTANT_INSTRUCTION, QA_AGENT_INSTRUCTION, function_definition, tools)
 
 
 class MessageAPIInput(BaseModel):
@@ -82,7 +81,7 @@ async def websocket_endpoint(userid: int, isProfile: int, websocket: WebSocket, 
                 ]
                 createMessage(chat_message = messages)
         except WebSocketDisconnect:
-            ASSISTANT.removeThread(roomId=roomId)
+            ASSISTANT.removeThread(userid)
     except Exception as e:
         print(e)
 

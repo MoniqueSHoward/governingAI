@@ -55,7 +55,7 @@ def scrape_company_info(url:str = ""):
                 del tag[attribute]
         return str(soup.find("body")).strip()
     except requests.RequestException as e:
-        return str(e)
+        return "Error while scraping"
         
 
 
