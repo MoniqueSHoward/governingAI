@@ -1,0 +1,9 @@
+fastapi
+dotenv
+uvicorn
+sqlalchemy
+beautifulsoup4
+openai
+pandas
+pydantic
+selenium
