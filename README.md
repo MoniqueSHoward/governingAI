@@ -62,3 +62,13 @@ It is a user-friendly web application that simplifies the process of selecting, 
   •	**Ongoing Monitoring**: Continuously tracks the compliance and responsible practices of your chosen AI tools, alerting you to any changes or potential risks.
 
   •	**Regulatory Updates**: Timely notifications and actionable insights on new and changing regulations.
+
+
+## Video Presentation
+https://github.com/MoniqueSHoward/governingAI/assets/54523934/77eaae6f-ccd0-4436-81a9-1b2149b35f58
+
+
+## Demo Video
+
+https://github.com/MoniqueSHoward/governingAI/assets/54523934/cfd40779-a86b-4729-9da9-2d872509db4c
+
