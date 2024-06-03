@@ -72,3 +72,11 @@ https://github.com/MoniqueSHoward/governingAI/assets/54523934/77eaae6f-ccd0-4436
 
 https://github.com/MoniqueSHoward/governingAI/assets/54523934/cfd40779-a86b-4729-9da9-2d872509db4c
 
+
+**Instruction for evaluating a vendors AI policy against guiding principles**
+
+ •	Goto "Guiding Principles" tab and complete the questionnaire.
+ 
+ •	Goto "Intake" tab and submit your vendor information.
+ 
+ •	Goto "Dashboard" to view evaluation results. Click vendor name to see full evaluation report.
