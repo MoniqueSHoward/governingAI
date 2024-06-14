@@ -32,7 +32,7 @@ class MessageAPIInput(BaseModel):
     userid: str
     isProfile: str
 
-@router.get('/message', status_code= status.HTTP_200_OK)
+@router.post('/message', status_code= status.HTTP_200_OK)
 async def getMessage(message:MessageAPIInput, db:Session = Depends(get_db)):
 
     room = db.query(ChatRoom).filter(ChatRoom.userid == int(message.userid)).filter(ChatRoom.profile_or_qa == bool(int(message.isProfile))).first()
