@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   Box,
   Button,
@@ -8,39 +8,66 @@ import {
   Heading,
   Input,
   Text,
-//   Link,
+  //   Link,
   VStack,
   useToast,
   Spacer,
-} from '@chakra-ui/react';
+} from "@chakra-ui/react";
 
 const VendorIntakeForm = () => {
-  const [vendorName, setVendorName] = useState('');
-  const [vendorWebsite, setVendorWebsite] = useState('');
+  const [vendorName, setVendorName] = useState("");
+  const [vendorWebsite, setVendorWebsite] = useState("");
   const toast = useToast();
+  
+  const [loading, setLoading] = useState(false);
+
+  // const handleSubmit = () => {
+  //   // Handle form submission logic here
+  //   toast({
+  //     title: "Form Submitted",
+  //     description: "Your form has been submitted successfully!",
+  //     status: "success",
+  //     duration: 2000,
+  //     isClosable: true,
+  //   });
+  // };
 
   const sendData = async () => {
+    setLoading(true)
     try {
-      const response = await fetch("http://127.0.0.1:8000/vendor-intake/v1/vendor", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          "userid":localStorage.getItem("userid"),
-          "vendor_name":vendorName,
-          "website": vendorWebsite
-      }),
-      });
-
-      if (response.ok) {
+      const response = await fetch(
+        "http://127.0.0.1:8000/vendor-intake/v1/vendor",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            userid: localStorage.getItem("userid"),
+            vendor_name: vendorName,
+            website: vendorWebsite,
+          }),
+        }
+      );
+      if (response.status === 406) {
+        setLoading(false)
         toast({
-              title: "vendor evaluated",
-              description: "Your form has been submitted successfully!",
-              status: "success",
-              duration: 2000,
-              isClosable: true,
-            });
+          title: "Access denied",
+          description: "This vendor has denied access to it's privacy policy!",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+        });
+      }
+      if (response.ok) {
+        setLoading(false)
+        toast({
+          title: "vendor evaluated",
+          description: "Your form has been submitted successfully!",
+          status: "success",
+          duration: 2000,
+          isClosable: true,
+        });
       } else {
       }
     } catch (error) {
@@ -49,7 +76,17 @@ const VendorIntakeForm = () => {
   };
 
   return (
-    <Box p={5} maxWidth="70vw" minHeight={'600px'} maxHeight={'80vh'} mx="auto" mt={10} borderWidth={1} borderRadius="lg" boxShadow="lg">
+    <Box
+      p={5}
+      maxWidth="70vw"
+      minHeight={"600px"}
+      maxHeight={"80vh"}
+      mx="auto"
+      mt={10}
+      borderWidth={1}
+      borderRadius="lg"
+      boxShadow="lg"
+    >
       <VStack spacing={10} align="stretch">
         <Heading size="lg" color="teal.600" textAlign="left">
           VENDOR INTAKE FORM
@@ -75,9 +112,23 @@ const VendorIntakeForm = () => {
             boxShadow="md"
           />
         </FormControl>
-        <Spacer/>
+        <Spacer />
         <Flex justify="center" mt={4}>
-          <Button colorScheme="teal" onClick={sendData} width={'100vw'}>
+          {/* <Button colorScheme="teal" onClick={sendData} width={"100vw"}>
+            Submit
+          </Button>
+           */}
+          {/* <Button isLoading colorScheme="teal" variant="solid">
+            Email
+          </Button> */}
+
+
+          <Button onClick={sendData} width={"100vw"}
+            isLoading = {loading}
+            loadingText="Please wait while the vendor is being evaluated"
+            colorScheme="teal"
+            variant="outline"
+          >
             Submit
           </Button>
         </Flex>

@@ -14,9 +14,11 @@ import {
   Tr,
   Text,
   Link,
+  useToast
 } from "@chakra-ui/react";
 
 const GuidingPrinciplesTable = () => {
+  const toast = useToast();
   const [values, setValues] = useState({
     consent: true,
     control: true,
@@ -117,6 +119,15 @@ const GuidingPrinciplesTable = () => {
       if (response.ok) {
         const responseData = await response.json();
         console.log(responseData);
+        toast({
+              title: "Saved!",
+              description: "Guiding principles updated successfully!",
+              status: "success",
+              duration: 2000,
+              isClosable: true,
+            });
+
+        
       }
     } catch (error) {
       console.error("Error:", error);

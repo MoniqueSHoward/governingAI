@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Text, Link, Grid, GridItem } from '@chakra-ui/react';
-
-
-
+import { Box, Text, Link, Grid, GridItem, Button, VStack, useToast } from '@chakra-ui/react';
+import { useNavigate } from 'react-router-dom';  // Import the useNavigate hook
 
 const UserProfile = () => {
   const [user, setUser] = useState({
@@ -20,6 +18,8 @@ const UserProfile = () => {
     currentAISolutions: "Perplexity.ai for marketing, email generation and article writing.",
   });
 
+  const navigate = useNavigate();  
+
   const getData = async () => {
     try {
       const response = await fetch(`http://127.0.0.1:8000/auth/v1/me?userid=${localStorage.getItem("userid")}`, {
@@ -28,9 +28,7 @@ const UserProfile = () => {
           "Content-Type": "application/json",
         },
       });
-  
       if (response.ok) {
-        
         const responseData = await response.json();
         setUser({
           "contact": responseData.userinfo.username,
@@ -44,14 +42,11 @@ const UserProfile = () => {
           "aiPolicy": responseData.userinfo.ai_policy,
           "aiParameters": responseData.userinfo.ai_parameters,
           "usingAI": responseData.userinfo.ai_policy,
-          "currentAISolutions": "Perplexity.ai for marketing, email generation and article writing.",
+          "currentAISolutions": responseData.userinfo.using_ai,
         });
         console.log(responseData)
-        
-  
       } else {
-        
-        // navigate(`/chat`);
+        // Handle error
       }
     } catch (error) {
       console.error("Error:", error);
@@ -61,6 +56,21 @@ const UserProfile = () => {
   useEffect(() => {
     getData();
   }, []);
+  const toast = useToast()
+  const handleLogout = () => {
+    // Remove user data from local storage
+    localStorage.removeItem("userid");
+    localStorage.removeItem("isProfile");
+    // Navigate to the main page
+    toast({
+      title: "Good Bye!",
+      description: " User logged out successfully!",
+      status: "success",
+      duration: 2000,
+      isClosable: true,
+    });
+    navigate("/");
+  };
 
   return (
     <Box p={5} m={2} maxHeight={'100vh'} mx="auto">
@@ -71,14 +81,12 @@ const UserProfile = () => {
         <GridItem>
           <Text>{user.contact}</Text>
         </GridItem>
-
         <GridItem>
           <Text fontWeight="bold">COMPANY</Text>
         </GridItem>
         <GridItem>
           <Text>{user.company}</Text>
         </GridItem>
-
         <GridItem>
           <Text fontWeight="bold">WEBSITE</Text>
         </GridItem>
@@ -87,70 +95,69 @@ const UserProfile = () => {
             {user.website}
           </Link>
         </GridItem>
-
         <GridItem>
           <Text fontWeight="bold">ADDRESS</Text>
         </GridItem>
         <GridItem>
           <Text>{user.address}</Text>
         </GridItem>
-
         <GridItem>
           <Text fontWeight="bold">CITY</Text>
         </GridItem>
         <GridItem>
           <Text>{user.city}</Text>
         </GridItem>
-
         <GridItem>
           <Text fontWeight="bold">ZIP CODE</Text>
         </GridItem>
         <GridItem>
           <Text>{user.zipCode}</Text>
         </GridItem>
-
         <GridItem>
           <Text fontWeight="bold">PHONE</Text>
         </GridItem>
         <GridItem>
           <Text>{user.phone}</Text>
         </GridItem>
-
         <GridItem>
           <Text fontWeight="bold">INDUSTRY</Text>
         </GridItem>
         <GridItem>
           <Text>{user.industry}</Text>
         </GridItem>
-
         <GridItem>
           <Text fontWeight="bold">AI POLICY</Text>
         </GridItem>
         <GridItem>
           <Text>{user.aiPolicy}</Text>
         </GridItem>
-
         <GridItem>
           <Text fontWeight="bold">AI PARAMETERS</Text>
         </GridItem>
         <GridItem>
           <Text>{user.aiParameters}</Text>
         </GridItem>
-
         <GridItem>
           <Text fontWeight="bold">USING AI?</Text>
         </GridItem>
         <GridItem>
           <Text>{user.usingAI}</Text>
         </GridItem>
-
         <GridItem>
           <Text fontWeight="bold">CURRENT AI SOLUTIONS</Text>
         </GridItem>
         <GridItem maxW={'80vw'}>
           <Text>{user.currentAISolutions}</Text>
         </GridItem>
+        <GridItem maxW={'80vw'}>
+        <Button onClick={handleLogout} mt={5} colorScheme="red" bottom={5}>
+        Log Out
+        </Button>
+        </GridItem>
       </Grid>
+      {/* <Button onClick={handleLogout} mt={5} colorScheme="red" position="absolute" bottom={5} left={5}>
+        Log Out
+      </Button> */}
     </Box>
   );
 };

@@ -29,20 +29,16 @@ router = APIRouter(
 
 
 @router.get('/me')
-def getUser(userData:UserModelLogin , db: Session = Depends(get_db)):
-    if userData.userid:
-        user = db.query(UserDBModel)\
-            .filter(UserDBModel.userid == userData.userid).first()
-    else:
-        user = db.query(UserDBModel)\
-            .filter(UserDBModel.username == userData.username)\
-            .filter(UserDBModel.website == userData.website).first()
+def getUser(userid:int , db: Session = Depends(get_db)):
+    user = db.query(UserDBModel)\
+        .filter(UserDBModel.userid == userid).first()
     if not user:
         return HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail="not found"
         )
     
     return dict(
+
         userinfo = user,
         inuse_ai = db.query(InuseAISolution).filter(InuseAISolution.userid == user.userid).all()
     )
@@ -52,7 +48,7 @@ def getUser(userData:UserModelLogin , db: Session = Depends(get_db)):
 @router.post("/getStarted", status_code=status.HTTP_201_CREATED)
 async def getStarted(userData:UserModel, db: Session = Depends(get_db)):
     user = db.query(UserDBModel)\
-        .filter(UserDBModel.website == userData.website).filter(UserDBModel.username == userData.username).first()
+        .filter(UserDBModel.website == userData.website).first()
     if user:
         return user
     
@@ -78,11 +74,8 @@ async def getStarted(userData:UserModel, db: Session = Depends(get_db)):
     db.add(newroom)
     db.commit()
 
-    return {
-        "userid": newUser.userid,
-        "username": newUser.username,
-        "website": newUser.website,
-    }
+    return db.query(UserDBModel)\
+        .filter(UserDBModel.userid == newUser.userid).first()
 
 
 @router.patch("/updateUser", status_code=status.HTTP_200_OK)
