@@ -15,6 +15,7 @@ import {
   Text,
   Link,
 } from "@chakra-ui/react";
+import config from '../config';
 
 const GuidingPrinciplesTable = () => {
   const [values, setValues] = useState({
@@ -36,7 +37,7 @@ const GuidingPrinciplesTable = () => {
   const fetchGuidingPrinciples = async () => {
     try {
       const response = await fetch(
-        `http://127.0.0.1:8000/guiding-principle/v1/my-privacy-principles?userid=${localStorage.getItem(
+        `${config.backendHost}/guiding-principle/v1/my-privacy-principles?userid=${localStorage.getItem(
           "userid"
         )}`,
         {
@@ -65,7 +66,7 @@ const GuidingPrinciplesTable = () => {
   const fetchUserData = async () => {
     try {
       const response = await fetch(
-        `http://127.0.0.1:8000/auth/v1/me?userid=${localStorage.getItem("userid")}`,
+        `${config.backendHost}/auth/v1/me?userid=${localStorage.getItem("userid")}`,
         {
           method: "GET",
           headers: {
@@ -105,7 +106,7 @@ const GuidingPrinciplesTable = () => {
 
     try {
       const response = await fetch(
-        "http://127.0.0.1:8000/guiding-principle/v1/my-privacy-principles",
+        "${config.backendHost}/guiding-principle/v1/my-privacy-principles",
         {
           method: "POST",
           headers: {

@@ -13,6 +13,7 @@ import {
   useToast,
   Spacer,
 } from '@chakra-ui/react';
+import config from '../config';
 
 const VendorIntakeForm = () => {
   const [vendorName, setVendorName] = useState('');
@@ -21,7 +22,7 @@ const VendorIntakeForm = () => {
 
   const sendData = async () => {
     try {
-      const response = await fetch("http://127.0.0.1:8000/vendor-intake/v1/vendor", {
+      const response = await fetch(`${config.backendHost}/v1/vendor`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

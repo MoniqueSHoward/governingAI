@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Text, Link, Grid, GridItem } from '@chakra-ui/react';
+import config from '../config';
 
 
 
@@ -22,15 +23,15 @@ const UserProfile = () => {
 
   const getData = async () => {
     try {
-      const response = await fetch(`http://127.0.0.1:8000/auth/v1/me?userid=${localStorage.getItem("userid")}`, {
+      const response = await fetch(`${config.backendHost}/auth/v1/me?userid=${localStorage.getItem("userid")}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
         },
       });
-  
+
       if (response.ok) {
-        
+
         const responseData = await response.json();
         setUser({
           "contact": responseData.userinfo.username,
@@ -47,10 +48,10 @@ const UserProfile = () => {
           "currentAISolutions": "Perplexity.ai for marketing, email generation and article writing.",
         });
         console.log(responseData)
-        
-  
+
+
       } else {
-        
+
         // navigate(`/chat`);
       }
     } catch (error) {

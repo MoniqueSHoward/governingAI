@@ -12,12 +12,13 @@ import {
   VStack,
   Heading,
 } from "@chakra-ui/react";
+import config from '../config';
 
 
 
 const GetStartedModal = () => {
-  
-  
+
+
   const { isOpen, onOpen, onClose } = useDisclosure();
   const navigate = useNavigate();
 
@@ -26,7 +27,7 @@ const GetStartedModal = () => {
 
   const sendData = async () => {
     try {
-      const response = await fetch("http://127.0.0.1:8000/auth/v1/getStarted", {
+      const response = await fetch(`${config.backendHost}/auth/v1/getStarted`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

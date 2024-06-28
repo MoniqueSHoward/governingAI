@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef, useContext } from 'react';
 import { Box, Input, Button, VStack, HStack, Text } from '@chakra-ui/react';
 import Markdown from 'react-markdown';
 import { useLocation } from 'react-router-dom';
+import config from '../config';
 
 const ChatWindow = () => {
   const [message, setMessage] = useState('');
@@ -9,31 +10,31 @@ const ChatWindow = () => {
   const [isSending, setIsSending] = useState(false);
   const ws = useRef(null);
   const location = useLocation(); // Get the current location object
-  
+
 
   const getData = async () => {
     try {
-      const response = await fetch(`http://127.0.0.1:8000/auth/v1/me?userid=${localStorage.getItem("userid")}`, {
+      const response = await fetch(`${config.backendHost}/auth/v1/me?userid=${localStorage.getItem("userid")}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
         },
       });
-  
+
       if (response.ok) {
         localStorage.setItem("isProfile", 0)
         const responseData = await response.json();
         responseData.userinfo.map((key, val)=>{
           if (val === null){
               localStorage.setItem("isProfile", 1)
-  
+
           }
         })
         console.log(responseData)
-        
-  
+
+
       } else {
-        
+
       }
     } catch (error) {
       console.error("Error:", error);
@@ -43,18 +44,18 @@ const ChatWindow = () => {
 
   const getMessages = async (userId, isProfile) => {
     try {
-      const response = await fetch("http://127.0.0.1:8000/chat/v1/message", {
+      const response = await fetch("${config.backendHost}/chat/v1/message", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ "userid":userId,"isProfile":isProfile }),
       });
-  
+
       if (response.ok) {
         const responseData = await response.json();
         responseData.map((message)=>{
-          
+
           setMessages((prevMessages) => [...prevMessages, { role: message.isuser?"user":'system',"message": message.message }]);
         })
       } else {
@@ -66,7 +67,7 @@ const ChatWindow = () => {
   };
 
   useEffect(() => {
-   
+
     getData();
 
 
@@ -103,7 +104,7 @@ const ChatWindow = () => {
       setMessages((prevMessages) => [...prevMessages, userMessage]);
       ws.current.send(message);
       setMessage('');
-      setIsSending(true); 
+      setIsSending(true);
     }
   };
 
