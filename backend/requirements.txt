@@ -1,4 +1,4 @@
-fastapi
+sfastapi
 python-dotenv
 uvicorn
 sqlalchemy
@@ -7,3 +7,4 @@ openai
 pandas
 pydantic
 selenium
+requests

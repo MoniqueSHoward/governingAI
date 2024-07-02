@@ -14,10 +14,11 @@ import {
   Tr,
   Text,
   Link,
+  useToast
 } from "@chakra-ui/react";
-import config from '../config';
 
 const GuidingPrinciplesTable = () => {
+  const toast = useToast();
   const [values, setValues] = useState({
     consent: true,
     control: true,
@@ -37,7 +38,7 @@ const GuidingPrinciplesTable = () => {
   const fetchGuidingPrinciples = async () => {
     try {
       const response = await fetch(
-        `${config.backendHost}/guiding-principle/v1/my-privacy-principles?userid=${localStorage.getItem(
+        `http://127.0.0.1:8000/guiding-principle/v1/my-privacy-principles?userid=${localStorage.getItem(
           "userid"
         )}`,
         {
@@ -66,7 +67,7 @@ const GuidingPrinciplesTable = () => {
   const fetchUserData = async () => {
     try {
       const response = await fetch(
-        `${config.backendHost}/auth/v1/me?userid=${localStorage.getItem("userid")}`,
+        `http://127.0.0.1:8000/auth/v1/me?userid=${localStorage.getItem("userid")}`,
         {
           method: "GET",
           headers: {
@@ -106,7 +107,7 @@ const GuidingPrinciplesTable = () => {
 
     try {
       const response = await fetch(
-        "${config.backendHost}/guiding-principle/v1/my-privacy-principles",
+        "http://127.0.0.1:8000/guiding-principle/v1/my-privacy-principles",
         {
           method: "POST",
           headers: {
@@ -118,6 +119,15 @@ const GuidingPrinciplesTable = () => {
       if (response.ok) {
         const responseData = await response.json();
         console.log(responseData);
+        toast({
+              title: "Saved!",
+              description: "Guiding principles updated successfully!",
+              status: "success",
+              duration: 2000,
+              isClosable: true,
+            });
+
+
       }
     } catch (error) {
       console.error("Error:", error);

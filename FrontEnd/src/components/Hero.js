@@ -1,3 +1,4 @@
+// src/components/Hero.js
 import {
   Box,
   HStack,
@@ -6,7 +7,7 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
-import heroImage from "../assets/healthcare-image.png"; 
+import heroImage from "../assets/healthcare-image.png"; // Move the uploaded image to the src/assets folder
 import GetStartedModal from "./GetStartedModal";
 const Hero = () => (
   <Box bg="white" p={20} >
