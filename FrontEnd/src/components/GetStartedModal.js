@@ -68,6 +68,7 @@ import {
   Heading,
   useToast
 } from "@chakra-ui/react";
+import config from '../config';
 
 // import { UniversalContext } from './Idprovider';
 
@@ -84,7 +85,7 @@ const GetStartedModal = () => {
 
   const sendData = async () => {
     try {
-      const response = await fetch("http://127.0.0.1:8000/auth/v1/getStarted", {
+      const response = await fetch(`${config.backendHost}/auth/v1/getStarted`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Text, Link, Grid, GridItem, Button, VStack, useToast } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';  // Import the useNavigate hook
+import config from '../config';
 
 const UserProfile = () => {
   const [user, setUser] = useState({
@@ -22,7 +23,7 @@ const UserProfile = () => {
 
   const getData = async () => {
     try {
-      const response = await fetch(`http://127.0.0.1:8000/auth/v1/me?userid=${localStorage.getItem("userid")}`, {
+      const response = await fetch(`${config.backendHost}/auth/v1/me?userid=${localStorage.getItem("userid")}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

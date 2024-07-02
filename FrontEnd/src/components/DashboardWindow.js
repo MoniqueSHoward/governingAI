@@ -12,7 +12,7 @@
 
 //   const getData = async () => {
 //     try {
-//       const response = await fetch(`http://127.0.0.1:8000/vendor-intake/v1/vendor?userid=${localStorage.getItem("userid")}`, {
+//       const response = await fetch(`${config.backendHost}/vendor-intake/v1/vendor?userid=${localStorage.getItem("userid")}`, {
 //         method: "GET",
 //         headers: {
 //           "Content-Type": "application/json",
@@ -70,6 +70,7 @@ import React, { useState, useEffect } from 'react';
 import { Box, Flex } from '@chakra-ui/react';
 import ScoreCard from './ScoreCard'; // Adjust the import path if necessary
 import EvaluationTable from './EvaluationTable'; // Adjust the import path if necessary
+import config from '../config';
 
 const DashboardWindow = () => {
   const [privacy, setPrivacy] = useState(70);
@@ -80,7 +81,7 @@ const DashboardWindow = () => {
   const getData = async () => {
     try {
       const response = await fetch(
-        `http://127.0.0.1:8000/vendor-intake/v1/vendor?userid=${localStorage.getItem('userid')}`,
+        `${config.backendHost}/vendor-intake/v1/vendor?userid=${localStorage.getItem('userid')}`,
         {
           method: 'GET',
           headers: {

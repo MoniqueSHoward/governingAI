@@ -2,6 +2,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Box, Input, Button, VStack, HStack, Text, Spinner } from '@chakra-ui/react';
 import Markdown from 'react-markdown';
+import config from '../config';
 
 const ChatWindow = () => {
   const [message, setMessage] = useState('');
@@ -13,7 +14,7 @@ const ChatWindow = () => {
 
   const getData = async () => {
     try {
-      const response = await fetch(`http://127.0.0.1:8000/auth/v1/me?userid=${localStorage.getItem("userid")}`, {
+      const response = await fetch(`${config.backendHost}/auth/v1/me?userid=${localStorage.getItem("userid")}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -38,7 +39,7 @@ const ChatWindow = () => {
 
   const getMessages = async (userId, isProfile) => {
     try {
-      const response = await fetch("http://127.0.0.1:8000/chat/v1/message", {
+      const response = await fetch(`${config.backendHost}/chat/v1/message`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -62,7 +63,7 @@ const ChatWindow = () => {
     getData();
     const userId = localStorage.getItem("userid");
     const isProfile = localStorage.getItem("isProfile");
-    ws.current = new WebSocket(`ws://127.0.0.1:8000/chat/v1/message?userid=${userId}&isProfile=${isProfile}`);
+    ws.current = new WebSocket(`ws://${config.backendHost}/chat/v1/message?userid=${userId}&isProfile=${isProfile}`);
     getMessages(userId, isProfile);
     ws.current.onopen = () => {
       console.log('WebSocket Client Connected');

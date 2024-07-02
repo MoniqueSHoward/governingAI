@@ -13,6 +13,7 @@ import {
   useToast,
   Spacer,
 } from "@chakra-ui/react";
+import config from '../config';
 
 const VendorIntakeForm = () => {
   const [vendorName, setVendorName] = useState("");
@@ -36,7 +37,7 @@ const VendorIntakeForm = () => {
     setLoading(true)
     try {
       const response = await fetch(
-        "http://127.0.0.1:8000/vendor-intake/v1/vendor",
+        `${config.backendHost}/vendor-intake/v1/vendor`,
         {
           method: "POST",
           headers: {
